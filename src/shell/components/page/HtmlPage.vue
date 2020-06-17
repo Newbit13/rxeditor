@@ -268,12 +268,16 @@ export default {
     $rxbus.$on('nodeHtmlChanged', this.onNodeHtmlChanged)
     $rxbus.$on('codeFileChange', this.onCodeFileChange)
 
+    //newbit增加
+    $rxbus.$on('saveCodeFiles', this.saveCodeFiles)
+    $rxbus.$on('saveCode', this.saveCode)
+
     this.emitShellState()
 
     this.loadHtmlFile()
   },
 
-  destoryed () {
+  destroyed () {
     //delete window.$editorBus
     $rxbus.$off('draggingFromToolbox', this.draggingFromToolbox)
     $rxbus.$off('shellChangedNode', this.nodeChanged)
@@ -287,6 +291,10 @@ export default {
     $rxbus.$off('replyHtmlCode', this.onReplyHtmlCode)
     $rxbus.$off('nodeHtmlChanged', this.onNodeHtmlChanged)
     $rxbus.$off('codeFileChange', this.onCodeFileChange)
+
+    //newbit增加
+    $rxbus.$off('saveCodeFiles', this.saveCodeFiles)
+    $rxbus.$off('saveCode', this.saveCode)
 
     window.removeEventListener("message", this.receiveCanvasMessage);
     document.removeEventListener('mouseup', this.onMouseUp)
@@ -345,6 +353,17 @@ export default {
       this.commandProxy.clearCanvas()
     },
 
+    saveCode(){
+      console.log('为download做准备');
+      
+      this.commandProxy.iframe.contentWindow.rxEditor.download()
+    },
+
+    saveCodeFiles(_innerHTML){
+      // console.log(_innerHTML);
+      this.$store.commit('changeActiveFileCode', _innerHTML)
+      // console.log(this.$store.state.project.pages);
+    },
 
     draggingFromToolbox(item){
       if(this.actived){

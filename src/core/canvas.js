@@ -58,7 +58,10 @@ export class Canvas extends Node{
 
   generateJson(){
     let jsonArray = []
+    
     this.children.forEach((child)=>{
+      console.warn('没有toJson')
+      return
       jsonArray.push(child.toJson())
     })
     return jsonArray

@@ -57,8 +57,8 @@ export default {
 
   mounted () {
     $rxbus.$on('fileSelected', this.onFileSelected)
-    $rxbus.$on('projectChanged', ()=>{
-      this.files = []
+    $rxbus.$on('projectChanged', (project)=>{
+      this.files = project.pages
     })
     //$rxbus.$on('draggingFromToolbox', this.fileSelected)
   },

@@ -17,7 +17,9 @@
         <i class="fas fa-folder-open"></i> 
         {{$t('toolbar.open')}}
       </div>
-      <div class="button save"> 
+      <div class="button save"
+        @click="saveProject"
+      > 
         <i class="fas fa-save"></i> 
         {{$t('toolbar.save')}}
       </div>
@@ -81,7 +83,9 @@ export default {
     showOpenDialog(){
       this.openDialog = true
     },
-
+    saveProject(){
+      this.$emit('saveProject')
+    },
     changeTheme(theme){
       this.$emit('changeTheme', theme)
     },

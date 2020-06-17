@@ -7,6 +7,7 @@
       @changeTheme = "changeTheme"
       @openProject = "openProject"
       @download = "onDownload"
+      @saveProject = "saveProject"
     ></Toolbar>
     <div class="workspace">
       <LeftArea>
@@ -280,8 +281,16 @@ export default {
         this.$store.commit('isLoading', false)
       })
     },
-
+    saveProject(){
+      // console.warn('newbit:保存无用，暂无此功能');
+      $rxbus.$emit('saveCode', this.pageId)
+      // console.log(this.$store.state.project);
+      // var currentCode = window.rxEditor.requestHtmlCode();
+      // console.log(rxEditor);
+    },
     onDownload(){
+      this.saveProject();//先保存
+      
       let themZipPath = this.$store.state.theme.zip
       if(themZipPath){
         $axios.get(themZipPath,{responseType:'blob'})
@@ -297,6 +306,7 @@ export default {
       zip.loadAsync(file)
       .then(zip=>{
         //输出已经加载的HTML，并记录未加载的文件
+        
         this.$store.state.project.pages.forEach(file=>{
           if(file.code){
             zip.file(file.name, this.makeHtml(file.code))

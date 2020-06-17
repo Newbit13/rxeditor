@@ -273,12 +273,13 @@ export class RXEditor{
     this.render()
   }
 
-  //download(){
-  //  let innerHTML = this.canvas.generateHTML()
-  //  let json = this.canvas.generateJson()
-  //  this.commandProxy.saveCodeFiles(innerHTML, json)
-  //  this.render()
-  //}
+  download(){
+    console.log('解除注释');
+    let innerHTML = this.canvas.generateHTML()
+    let json = this.canvas.generateJson()
+    this.commandProxy.saveCodeFiles(innerHTML, json)
+    this.render()
+  }
 
   clearCanvas(){
     this.commandManager.clearCanvas()

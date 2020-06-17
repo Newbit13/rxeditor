@@ -110,9 +110,10 @@ export class RXEditorCommandProxy{
       case 'redo':
         this.serveForRXEditor.redo()
         break;
-      //case 'download':
-      //  this.serveForRXEditor.download()
-      //  break;
+      case 'download':
+        console.log('解除注释');
+       this.serveForRXEditor.download()
+       break;
       case 'clearCanvas':
         this.serveForRXEditor.clearCanvas()
         break;

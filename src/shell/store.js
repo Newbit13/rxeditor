@@ -32,6 +32,10 @@ new Vuex.Store({
 
     isLoading(state, isLoading){
       state.isLoading = isLoading
+    },
+    //newbit
+    changeActiveFileCode(state,code){
+      state.activedFile.code = code
     }
   },
  
