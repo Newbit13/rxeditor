@@ -282,6 +282,7 @@ export default {
       })
     },
     saveProject(){
+      // console.log(this.$store.state.activedFile);
       // console.warn('newbit:保存无用，暂无此功能');
       $rxbus.$emit('saveCode', this.pageId)
       // console.log(this.$store.state.project);
@@ -289,7 +290,7 @@ export default {
       // console.log(rxEditor);
     },
     onDownload(){
-      this.saveProject();//先保存
+      // this.saveProject();//先保存，这样写不行，保存是异步的
       
       let themZipPath = this.$store.state.theme.zip
       if(themZipPath){
@@ -301,6 +302,8 @@ export default {
     },
 
     loadZipFile(file){
+      console.log(this.$store.state.project.pages);
+      
       let zip = new JSZip();
       let filesNeedDownload = []
       zip.loadAsync(file)
@@ -349,7 +352,18 @@ export default {
       .then(function(content) {
         saveAs(content, "RX-HTML.zip");
       });      
-    }
+    },
+
+    saveCodeFiles(_innerHTML,pageId){
+      // console.log({_innerHTML});
+      // console.log({pageId});
+      // console.log(this.$store.state.project.pages);
+
+      this.$store.commit('updateFileCode', {
+        id:pageId,
+        code:_innerHTML
+      })
+    },
 
   },
 
@@ -362,9 +376,13 @@ export default {
     $rxbus.$on('resizeScreen', this.resizeScreen)
     $rxbus.$on('showNodeTree', this.onShowNodeTree)
 
+    $rxbus.$on('saveCodeFiles', this.saveCodeFiles)
+
 
     this.$store.commit('projectChange', null)
-    $axios.get('api/project/vular')
+    // $axios.get('api/project/vular')
+    $axios.get('api/project/tongxing_actPrimeiraLiga')
+    // .then((res)=>{
     .then((res)=>{
       this.$store.commit('projectChange', new Project(res.data))
     })
@@ -383,6 +401,8 @@ export default {
     $rxbus.$off('styleValueChange', this.onStyleValueChange)
     $rxbus.$off('resizeScreen', this.resizeScreen)
     $rxbus.$off('showNodeTree', this.onShowNodeTree)
+
+    $rxbus.$off('saveCodeFiles', this.saveCodeFiles)
   },
 
 }

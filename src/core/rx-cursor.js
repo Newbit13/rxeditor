@@ -186,6 +186,7 @@ export class RxCursor extends RXComponent{
 
   followElement(node){
     let domElement = node.view.$dom
+    
     let rect = domElement.getBoundingClientRect()
     if(this.$dom){
       this.$dom.style.left = rect.x + 'px'

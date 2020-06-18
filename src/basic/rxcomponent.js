@@ -143,6 +143,7 @@ export class RXComponent{
   setInnerHTML(innerHTML){
     this.innerHTML = innerHTML
     if(this.$dom){
+      // console.log(this.$dom);
       this.$dom.innerHTML = innerHTML
     }
     return this

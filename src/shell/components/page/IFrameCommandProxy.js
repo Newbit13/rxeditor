@@ -62,6 +62,12 @@ export class IFrameCommandProxy{
     })
   }
 
+  getFileCode(){
+    this.sendMessageToRXEditor({
+      name:'getFileCode'
+    })
+  }
+
   clearCanvas(){
     this.sendMessageToRXEditor({
       name:'clearCanvas'
@@ -140,7 +146,7 @@ export class IFrameCommandProxy{
         $rxbus.$emit('commandExcuted', message.canUndo, message.canRedo, message.commandSchema, message.pageId)
         break;
       case 'saveCodeFiles':
-        $rxbus.$emit('saveCodeFiles', message.innerHTML)
+        $rxbus.$emit('saveCodeFiles', message.innerHTML,message.pageId)
         break;
       case 'canvasMouseup':
         $rxbus.$emit('canvasMouseup', message.event)

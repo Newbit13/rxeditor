@@ -136,10 +136,12 @@ export class RXEditor{
     this.canvas.allToNormalState()
   }
 
-  dragFromToolbox(item){
+  dragFromToolbox(item){//我从右侧的组件拉一个放到页面中，最终执行此处代码
+    //item.code就是代码
     if(this.commandManager.movingCommand) return
     this.clearFocusAndEditStates()
     let draggedNode = this.parseNode(item)
+    // console.log(draggedNode);
     this.commandManager.startNew(draggedNode)
     this.beginFollowMouse()
     //this.clearFocusAndEditStates()
@@ -161,7 +163,7 @@ export class RXEditor{
     this.canvas.clearCharNodes()
   }
 
-  doDrop(event){
+  doDrop(event){//用移动中的节点插入到鼠标上的节点里
     let position = this.cursor.position
     let node = this.cursor.node
     if(!node){
@@ -204,6 +206,7 @@ export class RXEditor{
   }
 
   followMouse(event){
+    
     let mouseFollower = this.mouseFollower
     if(mouseFollower.isActived){
       //mouseFollower.$dom.style.left =  this.followX(event)
@@ -273,12 +276,19 @@ export class RXEditor{
     this.render()
   }
 
-  download(){
-    console.log('解除注释');
+  // saveActivedFileCode(){
+  //   let innerHTML = this.canvas.generateHTML()
+    
+  //   let json = this.canvas.generateJson()
+  //   this.commandProxy.saveCodeFiles(innerHTML, json)
+  //   this.render()
+  // }
+
+  getFileCode(){
     let innerHTML = this.canvas.generateHTML()
-    let json = this.canvas.generateJson()
-    this.commandProxy.saveCodeFiles(innerHTML, json)
-    this.render()
+    
+    let pageId = this.pageId;
+    this.commandProxy.saveCodeFiles(innerHTML, pageId);
   }
 
   clearCanvas(){

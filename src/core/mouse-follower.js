@@ -18,6 +18,7 @@ export class MouseFollower extends RXComponent{
   }
 
   followMouse(event){
+    // console.log(this.$dom);
     this.$dom.style.left =  event.clientX
     this.$dom.style.top =  event.clientY
     super.show()

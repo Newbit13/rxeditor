@@ -9,6 +9,7 @@ new Vuex.Store({
     isLoading:true,
     activedFile:null,
     project:null,
+    fileMap:{},
     theme:null,
     bootstrapCss : "vendor/bootstrap-4.4.1-dist/css/bootstrap.min.css",
     jquery : "vendor/jquery/jquery-3.4.1.min.js",
@@ -33,9 +34,18 @@ new Vuex.Store({
     isLoading(state, isLoading){
       state.isLoading = isLoading
     },
-    //newbit
-    changeActiveFileCode(state,code){
-      state.activedFile.code = code
+
+    updateFileCode(state,data){
+      const {id,code} = data;
+      let project = state.fileMap[id];
+      if(project){
+        project.code = code;
+      }
+    },
+    initFileMap(state,data){
+      const {pageId,file} = data
+      
+      state.fileMap[pageId] = file
     }
   },
  

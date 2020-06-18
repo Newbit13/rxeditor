@@ -52,6 +52,8 @@ class CommandMovable{
   }
 
   finish(){
+    console.log('commandMovable finish');
+    
     let draggedNode = this.node
     if(draggedNode.parent){
       draggedNode.parent.changeToState('normalState')
@@ -253,6 +255,7 @@ class CommandTextEdit{
   }
 
   finish(){
+    console.log('CommandTextEdit finished');
     this.node.children = rxEditor.nodeParser.parse(this.node.view.$dom.innerHTML)
 
     this.node.children.forEach(child=>{

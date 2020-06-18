@@ -72,11 +72,11 @@ export class RXEditorCommandProxy{
     })
   }
 
-  saveCodeFiles(innerHTML, json){
+  saveCodeFiles(innerHTML, pageId){
     this.sendMessage({
       name: 'saveCodeFiles',
       innerHTML:innerHTML,
-      json:json,
+      pageId:pageId,
     })
   }
 
@@ -113,6 +113,9 @@ export class RXEditorCommandProxy{
       case 'download':
         console.log('解除注释');
        this.serveForRXEditor.download()
+       break;
+      case 'getFileCode':
+       this.serveForRXEditor.getFileCode()
        break;
       case 'clearCanvas':
         this.serveForRXEditor.clearCanvas()
