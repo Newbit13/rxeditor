@@ -36,7 +36,12 @@ export default {
     if(!this.inputValue.code && this.inputValue.path){
       $axios.get(this.inputValue.path)
       .then((res)=>{
-        this.$set(this.inputValue, 'code', res.data)
+        let result = res.data;
+        if(result.retcode !== 0){
+          return
+        }
+        let data = result.data;
+        this.$set(this.inputValue, 'code', data)
       })
     }
   },

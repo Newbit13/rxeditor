@@ -173,7 +173,12 @@ export default {
       if(project.theme){
         $axios.get(project.theme)
         .then((res)=>{
-          this.$store.commit('themeChange', res.data)
+          let result = res.data;
+      if(result.retcode !== 0){
+        return
+      }
+      let data = result.data;
+          this.$store.commit('themeChange', data)
         })
       }
     }
@@ -193,9 +198,14 @@ export default {
       }
       $axios.get(theme.api)
       .then((res)=>{
-        let project = new Project(res.data)
+        let result = res.data;
+      if(result.retcode !== 0){
+        return
+      }
+      let data = result.data;
+        let project = new Project(data)
         this.$store.commit('projectChange', project)
-        this.$store.commit('themeChange', res.data)
+        this.$store.commit('themeChange', data)
       })
     },
 
@@ -275,6 +285,7 @@ export default {
         return $axios.get(data.path)
       }))
       .then((responses)=>{
+        
         for(var i = 0; i < responses.length; i++){
           this.$set(files[i], "code", responses[i].data)
         }
@@ -282,7 +293,7 @@ export default {
       })
     },
     saveProject(){
-      // console.log(this.$store.state.activedFile);
+      console.log('保存');
       // console.warn('newbit:保存无用，暂无此功能');
       $rxbus.$emit('saveCode', this.pageId)
       // console.log(this.$store.state.project);
@@ -296,7 +307,9 @@ export default {
       if(themZipPath){
         $axios.get(themZipPath,{responseType:'blob'})
         .then((res)=>{
-          this.loadZipFile(res.data)
+          //todo
+          let data = res.data;
+          this.loadZipFile(data)
         })
       }
     },
@@ -381,14 +394,25 @@ export default {
 
     this.$store.commit('projectChange', null)
     // $axios.get('api/project/vular')
-    $axios.get('api/project/tongxing_actPrimeiraLiga')
+    $axios.get('api/project/getProject',{params:{projectName:'actPrimeiraLiga'}})
     // .then((res)=>{
     .then((res)=>{
-      this.$store.commit('projectChange', new Project(res.data))
+      let result = res.data;
+      if(result.retcode !== 0){
+        return
+      }
+      let data = result.data;
+      
+      this.$store.commit('projectChange', new Project(data))
     })
 
     $axios.get("api/toolbox").then((res)=>{
-      this.baseToolbox = res.data
+      let result = res.data;
+      if(result.retcode !== 0){
+        return
+      }
+      let data = result.data;
+      this.baseToolbox = data
     })
 
   },

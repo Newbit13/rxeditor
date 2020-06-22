@@ -83,7 +83,12 @@ export default {
     this.selectedPorject = null
     $axios.get('api/projects')
     .then((res)=>{
-      this.projects = res.data
+      let result = res.data;
+      if(result.retcode !== 0){
+        return
+      }
+      let data = result.data;
+      this.projects = data
     })
   },
 

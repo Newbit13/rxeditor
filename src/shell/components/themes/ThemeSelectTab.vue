@@ -36,8 +36,13 @@ export default {
 
     $axios.get(this.api)
     .then((res)=>{
+      let result = res.data;
+      if(result.retcode !== 0){
+        return
+      }
+      let data = result.data;
       //console.log(res.data)
-      this.themes = res.data
+      this.themes = data
     })//.catch(function (error) {
      // console.log(error)
     //})

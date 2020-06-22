@@ -359,8 +359,6 @@ export default {
     },
 
     saveCode(pageId){
-      console.log('为download做准备');
-      
       // this.commandProxy.iframe.contentWindow.rxEditor.getFileCode();
       this.commandProxy.getFileCode();
     },
@@ -378,7 +376,12 @@ export default {
       if(!this.inputValue.code){
         $axios.get(this.inputValue.path)
         .then((res)=>{
-          this.$set(this.inputValue, 'code', res.data)
+          let result = res.data;
+      if(result.retcode !== 0){
+        return
+      }
+      let data = result.data;
+          this.$set(this.inputValue, 'code', data)
           this.sentHtmlToCanvas()
         })
       }
@@ -490,10 +493,16 @@ export default {
     },
 
     loadHtmlFile(){
+      console.log(this.inputValue.path);
+      
       if(this.inputValue.path){
-        $axios.get(this.inputValue.path)
+        $axios.get('/api/project/getFileCode',{
+          params:{path:this.inputValue.path}
+        })
         .then((res)=>{
-          this.$set(this.inputValue, 'code', res.data)
+          //todo,这里请求的是本地文件，考虑下是否修改
+          let data = res.data;
+          this.$set(this.inputValue, 'code', data)
         })
       }
       else{

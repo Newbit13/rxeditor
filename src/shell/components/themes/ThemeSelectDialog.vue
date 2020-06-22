@@ -72,7 +72,12 @@ export default {
     this.selectedTheme = null
     $axios.get('api/themes')
     .then((res)=>{
-      this.themes = res.data
+      let result = res.data;
+      if(result.retcode !== 0){
+        return
+      }
+      let data = result.data;
+      this.themes = data
     })//.catch(function (error) {
      // console.log(error)
     //})
