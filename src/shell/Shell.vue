@@ -308,7 +308,7 @@ export default {
         $axios.get(themZipPath,{responseType:'blob'})
         .then((res)=>{
           //todo
-          let data = res.data;
+          let data = res.data;//Blob
           this.loadZipFile(data)
         })
       }
@@ -376,6 +376,18 @@ export default {
         id:pageId,
         code:_innerHTML
       })
+      
+      $axios.post('/api/project/saveFileCode',{
+            filepath:this.$store.state.fileMap[pageId].path,
+            code:_innerHTML
+        }).then((res)=>{
+        //todo,这里请求的是本地文件，考虑下是否修改
+        let data = res.data;
+        if(data.retcode == 0){
+          // alert('保存成功')
+        }
+      })
+
     },
 
   },

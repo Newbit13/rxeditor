@@ -142,5 +142,18 @@ router.get('/getFileCode', async (req, res, next) => {
   // })
 });
 
+router.post('/saveFileCode', async (req, res, next) => {
+  const {body} = req;
+  
+  const {filepath,code} = body
+  const filePath = path.resolve(__dirname,'../static_file','.'+filepath)
+  fs.writeFile(filePath,code,()=>{
+    res.status(200).send({
+      retcode: 0
+    });
+  })
+  
+});
+
 module.exports = router;
 
